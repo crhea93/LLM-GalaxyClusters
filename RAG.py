@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
-
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 import streamlit as st
 from langchain.prompts import PromptTemplate
 from langchain.document_loaders import PyPDFLoader
