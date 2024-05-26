@@ -32,7 +32,7 @@ certifi==2024.2.2
 cffi==1.16.0
 charset-normalizer==3.3.2
 chroma-hnswlib==0.7.3
-chromadb
+chromadb==0.4.2
 ci-info==0.3.0
 click==8.1.7
 cloudpickle==3.0.0
@@ -229,7 +229,7 @@ python-multipart==0.0.9
 pytz==2024.1
 pyxnat==1.6.2
 PyYAML==6.0.1
-pysqlite3-binary
+pysqlite3-binary==0.5.0
 pyzmq==24.0.1
 rdflib==7.0.0
 referencing==0.34.0
