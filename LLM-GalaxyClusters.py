@@ -31,7 +31,7 @@ def load_chunk_persist_pdf() -> Chroma:
         return vectordb
 
     print('No existing vector database found. Creating new vector database...')
-    pdf_folder_path = "./"
+    pdf_folder_path = "../PerseusPapers"
     documents = []
 
     for file in os.listdir(pdf_folder_path):
@@ -73,18 +73,22 @@ def create_agent_chain():
 def get_llm_response(query):
     vectordb = load_chunk_persist_pdf()
     chain = create_agent_chain()
-    matching_docs = vectordb.similarity_search(query)
+    matching_docs = vectordb.similarity_search(query, k=5)
     promptTemplate = PromptTemplate.from_template(
                 """ You are a helpful assistant that can answer questions based on the given documents and rules.
                  
                 You should use the tools below to answer the question posed of you:
 
                     Rules:
-                    A)Only use the factual information from the available PDFs to answer the question.
-                    B)Please include references for each sentence in the following format. 
-                        Example: Galaxy clusters contain millions of stars[1] [1] Reference Information
+                    A) Only use the factual information from the available PDFs to answer the question.
+                    B) Please include references for each sentence in the following format. 
+                        Example: Galaxy clusters contain millions of stars [1]   
+                            [1] Citation in APA Format
                         For the Reference Information please include the author list and the year of publication
-                    
+                    C) Use as many references as possilbe to respond to the query
+                    D) If you don't know the answer then say "I don't know"
+
+
                     Question: {task}
                 """
         )
