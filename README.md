@@ -1,6 +1,8 @@
 # LLM for Galaxy Clusters
 In this repository we train a LLM to be an expert on galaxy clusters using a curated set of scientific articles on galaxy clusters. 
 
+This app can be found running at https://llm-galaxyclusters.streamlit.app/.
+
 ## How to use:
 - Create a `.env` file containing `OPENAI_API_KEY`.
 - Run `streamlit run LLM-GalaxyClusters.py`
