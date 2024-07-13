@@ -65,7 +65,7 @@ def load_chunk_persist_pdf() -> Chroma:
     return vectordb
 
 def create_agent_chain():
-    model_name = "gpt-3.5-turbo"
+    model_name = "gpt-4o"
     llm = ChatOpenAI(model_name=model_name)
     chain = load_qa_chain(llm, chain_type="stuff")
     return chain
@@ -73,25 +73,27 @@ def create_agent_chain():
 def get_llm_response(query):
     vectordb = load_chunk_persist_pdf()
     chain = create_agent_chain()
-    matching_docs = vectordb.similarity_search(query, k=5)
+    matching_docs = vectordb.similarity_search(query, k=3)
     promptTemplate = PromptTemplate.from_template(
                 """ You are a helpful assistant that can answer questions based on the given documents and rules.
                  
                 You should use the tools below to answer the question posed of you:
 
                     Rules:
-                    A) Only use the factual information from the available PDFs to answer the question.
-                    B) Please include references for each sentence in the following format. 
+                    - Only use the factual information from the available PDFs to answer the question.
+                    - Please include references for each sentence in the following format. 
                         Example: Galaxy clusters contain millions of stars [1]   
                             [1] Citation in APA Format
                         For the Reference Information please include the author list and the year of publication
-                    C) Use as many references as possilbe to respond to the query
-                    D) If you don't know the answer then say "I don't know"
+                    - Use as many references as possilbe to respond to the query
+                    - Do not repeat references in the same response
+                    
 
 
                     Question: {task}
                 """
         )
+    #- If you don't know the answer then say "I don't know"
     prompt = promptTemplate.format(
                 task=query
             )
